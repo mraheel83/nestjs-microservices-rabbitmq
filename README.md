@@ -1,0 +1,2 @@
+# nestjs-microservices-rabbitmq
+ 
