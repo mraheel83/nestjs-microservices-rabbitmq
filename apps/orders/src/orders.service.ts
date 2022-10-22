@@ -2,8 +2,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { BILLING_SERVICE } from './constants/services';
-import { CreateOrderRequestDto } from './dto/create-order-request';
+import { CreateOrderDto } from './dto/create-order';
 import { OrdersRepository } from './repositories/orders.repository';
+import { Order } from './schemas/order.schema';
 
 @Injectable()
 export class OrdersService {
@@ -12,13 +13,13 @@ export class OrdersService {
     @Inject(BILLING_SERVICE) private billingClient: ClientProxy,
   ) {}
 
-  async createOrder(createOrderRequestDto: CreateOrderRequestDto) {
+  async createOrder(createOrderDto: CreateOrderDto): Promise<Order> {
     // Create a mongodb session to use database transaction.
     const session = await this.ordersRepository.startTransaction();
 
     try {
       // Create an order in mongoDB and also pass the session.
-      const order = await this.ordersRepository.create(createOrderRequestDto, {
+      const order = await this.ordersRepository.create(createOrderDto, {
         session,
       });
 
@@ -27,19 +28,21 @@ export class OrdersService {
        * it before commiting the mongoDB session.
        **/
       await lastValueFrom(
-        this.billingClient.emit('order_created', { createOrderRequestDto }),
+        this.billingClient.emit('order_created', { createOrderDto }),
       );
 
-      // Commit MongoDB session transaction to persist the data.
+      // Commit MongoDB transaction to persist the data.
       await session.commitTransaction();
+
       return order;
     } catch (err) {
+      // Rollback transaction when anything went wrong
       await session.abortTransaction();
       throw err;
     }
   }
 
-  async getOrders() {
+  async getOrders(): Promise<Order[]> {
     return await this.ordersRepository.find({});
   }
 }

@@ -57,7 +57,7 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
    * @param filterQuery
    * @returns
    */
-  async find(filterQuery: FilterQuery<TDocument>) {
+  async find(filterQuery: FilterQuery<TDocument>): Promise<TDocument[]> {
     return this.model.find(filterQuery, {}, { lean: true });
   }
 

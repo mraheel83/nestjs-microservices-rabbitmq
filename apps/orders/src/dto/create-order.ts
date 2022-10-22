@@ -3,9 +3,9 @@ import {
   IsPhoneNumber,
   IsPositive,
   IsString,
-} from 'class-validator';
+} from "class-validator";
 
-export class CreateOrderRequestDto {
+export class CreateOrderDto {
   @IsString()
   @IsNotEmpty()
   name: string;
