@@ -13,7 +13,10 @@ export class OrdersService {
     @Inject(BILLING_SERVICE) private billingClient: ClientProxy,
   ) {}
 
-  async createOrder(createOrderDto: CreateOrderDto): Promise<Order> {
+  async createOrder(
+    createOrderDto: CreateOrderDto,
+    authentication: string,
+  ): Promise<Order> {
     // Create a mongodb session to use database transaction.
     const session = await this.ordersRepository.startTransaction();
 
@@ -28,7 +31,10 @@ export class OrdersService {
        * it before commiting the mongoDB session.
        **/
       await lastValueFrom(
-        this.billingClient.emit('order_created', { createOrderDto }),
+        this.billingClient.emit('order_created', {
+          createOrderDto,
+          Authentication: authentication,
+        }),
       );
 
       // Commit MongoDB transaction to persist the data.

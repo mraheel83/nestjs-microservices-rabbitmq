@@ -1,4 +1,4 @@
-import { RabbitmqModule } from '@app/common';
+import { AuthModule, RabbitmqModule } from '@app/common';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
@@ -15,6 +15,7 @@ import { BillingService } from './billing.service';
       }),
     }),
     RabbitmqModule,
+    AuthModule,
   ],
   controllers: [BillingController],
   providers: [BillingService],
