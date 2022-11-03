@@ -3,21 +3,20 @@ kind: Deployment
 metadata:
   name: billing
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: billing
-    template:
-      metadata:
+  template:
+    metadata:
+      labels:
         app: billing
-      spec:
-        containers:
-          - name: billing
-            image: mraheel83/billing:latest
-            ports:
-              - containerPort: 3000
-            env:
-              - name: RABBIT_MQ_BILLING_QUEUE
-                value: billing
-              - name: RABBIT_MQ_AUTH_QUEUE
-                value: auth
+    spec:
+      containers:
+        - name: billing
+          image: mraheel83/billing:latest
+          env:
+            - name: RABBIT_MQ_BILLING_QUEUE
+              value: billing
+            - name: RABBIT_MQ_AUTH_QUEUE
+              value: auth
