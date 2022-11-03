@@ -12,6 +12,7 @@ import { BillingService } from './billing.service';
       validationSchema: Joi.object({
         RABBIT_MQ_URI: Joi.string().required(),
         RABBIT_MQ_BILLING_QUEUE: Joi.string().required(),
+        RABBIT_MQ_AUTH_QUEUE: Joi.string().required(),
       }),
     }),
     RabbitmqModule,
