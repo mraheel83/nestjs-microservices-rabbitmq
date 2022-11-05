@@ -18,11 +18,13 @@ spec:
           env:
             - name: PORT
               value: '3001'
-            - name: RABBIT_MQ_BILLING_QUEUE
-              value: billing
-            - name: RABBIT_MQ_AUTH_QUEUE
-              value: auth
+            - name: MONGODB_URI
+              value: mongodb://root:password123@orders-app-mongodb-headless:27017/
             - name: JWT_SECRET
               value: d8BkzH9PA0zTbGyLq65LzFiA90jQLdQLq1lVCjx6ituAwob4XWN9XOW45Mm9IkmzFmIJoR/tKRYDma3cuQDkP6obTBDSyBPqxcZXlxALpqvQGsxhvOelihLAadaAwJREjEolwMtV5a5GvZ/gZmxaLoJu9RV4iRdMxEH59XPHr262DkcOLKq08axSlYBbNhLGIbwzwZJYOIhl1d8rWeN+k5ODZhZo+3NgpOY6A==
             - name: JWT_EXPIRATION
               value: '3600'
+            - name: RABBIT_MQ_URI
+              value: amqp://user:password123@orders-app-rabbitmq:5672
+            - name: RABBIT_MQ_AUTH_QUEUE
+              value: auth

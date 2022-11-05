@@ -18,7 +18,11 @@ spec:
           env:
             - name: PORT
               value: '3000'
-            - name: RABBIT_MQ_BILLING_QUEUE
-              value: billing
+            - name: MONGODB_URI
+              value: mongodb://root:password123@orders-app-mongodb-headless:27017/
+            - name: RABBIT_MQ_URI
+              value: amqp://user:password123@orders-app-rabbitmq:5672
             - name: RABBIT_MQ_AUTH_QUEUE
               value: auth
+            - name: RABBIT_MQ_BILLING_QUEUE
+              value: billing

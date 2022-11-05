@@ -16,6 +16,8 @@ spec:
         - name: billing
           image: mraheel83/billing:latest
           env:
+            - name: RABBIT_MQ_URI
+              value: amqp://user:password123@orders-app-rabbitmq:5672
             - name: RABBIT_MQ_BILLING_QUEUE
               value: billing
             - name: RABBIT_MQ_AUTH_QUEUE
