@@ -11,8 +11,8 @@ import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    UsersModule,
     DatabaseModule,
+    UsersModule,
     RabbitmqModule,
     ConfigModule.forRoot({
       isGlobal: true,
